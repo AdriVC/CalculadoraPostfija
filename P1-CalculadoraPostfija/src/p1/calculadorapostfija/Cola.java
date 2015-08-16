@@ -7,19 +7,41 @@ public class Cola {
     private Nodo head;
     private Nodo tail;
     
-    public Cola(int dato){
+    public Cola(){
+        size = 0;
+        head = null;
+        tail = null;
+    }
+    
+    public Cola(String dato){
         size = 1;
         head = new Nodo(dato,null);
         tail = head;
     }
     
-    public void queue(int dato){
+    public void queue(String dato){
         tail = new Nodo(dato,tail);
+        if(head == null){
+            head = tail;
+        }else{
+            Nodo temp = head;
+            for (int i = 1; i < size; i++) {
+            temp = temp.getNext();
+        }
+            temp.setNext(tail);
+            tail.setPrevious(temp);
+        }
+        size++;
+    }
+    
+    public void queue(Nodo nodo){
+        tail = nodo;
         Nodo temp = head;
         for (int i = 1; i < size; i++) {
             temp = temp.getNext();
         }
         temp.setNext(tail);
+        tail.setPrevious(temp);
         size++;
     }
     
@@ -52,6 +74,10 @@ public class Cola {
         return size;
     }
     
+    public boolean isEmpty(){
+        return size == 0;
+    }
+    
     @Override
     public String toString(){
 	Nodo temp = head;
@@ -60,7 +86,7 @@ public class Cola {
 		if(i == 0)
 			output += "(H) ";
 		if(i != size-1)
-			output += temp.getDato() + " - ";
+			output += temp.getDato() + " , ";
 		else
 			output += temp.getDato() + " (T)";
 		temp = temp.getNext();

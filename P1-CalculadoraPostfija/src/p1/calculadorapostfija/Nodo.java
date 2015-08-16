@@ -3,7 +3,7 @@ package p1.calculadorapostfija;
 
 public class Nodo {
 
-    protected int dato;
+    protected String dato;
     protected Nodo next;
     protected Nodo previous;
     
@@ -11,17 +11,17 @@ public class Nodo {
         
     }
     
-    public Nodo(int dato, Nodo previous){
+    public Nodo(String dato, Nodo previous){
         this.dato = dato;
         this.next = null;
         this.previous = previous;
     }
 
-    public int getDato() {
+    public String getDato() {
         return dato;
     }
 
-    public void setDato(int dato) {
+    public void setDato(String dato) {
         this.dato = dato;
     }
 

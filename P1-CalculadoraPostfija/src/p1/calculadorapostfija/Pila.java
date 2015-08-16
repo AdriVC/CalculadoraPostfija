@@ -5,7 +5,12 @@ public class Pila {
     private int size;
     private Nodo tos;
     
-    public Pila(int dato){
+    public Pila(){
+        this.size = 0;
+        this.tos = null;
+    }
+    
+    public Pila(String dato){
         this.size = 1;
         this.tos = new Nodo(dato,null);
     }
@@ -17,8 +22,20 @@ public class Pila {
         return ult;
     }
     
-    public void push(int dato){
+    public void push(String dato){
         Nodo nuevo = new Nodo(dato,tos);
+        if(tos == null){
+            tos = nuevo;
+        }else{
+           tos.setNext(nuevo);
+            tos = nuevo; 
+        }
+        size++;
+    }
+    
+    public void push(Nodo nodo){
+        Nodo nuevo = nodo;
+        nuevo.setPrevious(tos);
         tos.setNext(nuevo);
         tos = nuevo;
         size++;
@@ -28,13 +45,21 @@ public class Pila {
         return tos;
     }
     
+    public int getSize(){
+        return size;
+    }
+    
+    public boolean isEmpty(){
+        return size == 0;
+    }
+    
     @Override
     public String toString(){
         Nodo temp = tos;
         String output = " (ToS)";
         for (int i = 0; i < size; i++){
             if(i != size-1)
-                output = " - " + temp.getDato() + output;
+                output = " , " + temp.getDato() + output;
             else
 		output = temp.getDato() + output;
             temp = temp.getPrevious();
