@@ -1,37 +1,45 @@
 
 package p1.calculadorapostfija;
 
-import java.util.ArrayList;
-
 public class Pila {
-    private ArrayList<Integer> pilita;
+    private int size;
+    private Nodo tos;
     
-    public Pila(){
-        this.pilita = new ArrayList();
+    public Pila(int dato){
+        this.size = 1;
+        this.tos = new Nodo(dato,null);
     }
     
-    public int pop(){
-        int ult = pilita.get(pilita.size()-1);
-        pilita.remove(pilita.size()-1);
+    public Nodo pop(){
+        Nodo ult = tos;
+        tos = tos.getPrevious();
+        size--;
         return ult;
     }
     
     public void push(int dato){
-        pilita.add(dato);
+        Nodo nuevo = new Nodo(dato,tos);
+        tos.setNext(nuevo);
+        tos = nuevo;
+        size++;
     }
     
-    public int peek(){
-        return pilita.get(pilita.size()-1);
+    public Nodo peek(){
+        return tos;
     }
     
     @Override
     public String toString(){
-        String impresion = "";
-        for (int i = 0; i > pilita.size(); i++) {
-            System.out.println("entro a for");
-            impresion = impresion + "\n" + pilita.get(i);
-        }
-        return impresion;
+        Nodo temp = tos;
+        String output = " (ToS)";
+        for (int i = 0; i < size; i++){
+            if(i != size-1)
+                output = " - " + temp.getDato() + output;
+            else
+		output = temp.getDato() + output;
+            temp = temp.getPrevious();
+	}
+        return output;
     }
     
 }
