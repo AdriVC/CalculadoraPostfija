@@ -4,33 +4,59 @@ package p1.calculadorapostfija;
 public class P1CalculadoraPostfija {
 
     public static void main(String[] args) {
-        int hola = calcularPostfijo("31 + 20 * 10 + 32 / 2");
+        String op = "27 / 3 + 100 / 10 - 50 * 2";
+        System.out.println("operacion: " + op);
+        int hola = calcularPostfijo(op);
     }
     
     public static int calcularPostfijo(String operacion){
+        // calcular de operacion a postfijo
         String[] separacion = operacion.split(" ");
-        Pila pila_operaciones = new Pila();
+        Pila pilita = new Pila();
         Cola trencito = new Cola();
         for (int i = 0; i < separacion.length; i++) {
-            System.out.println(i + ": ");
             if(separacion[i].matches("\\d+")){
                 trencito.queue(separacion[i]);
             }else{
-                if((separacion[i].equals("+") || separacion[i].equals("-")) && !pila_operaciones.isEmpty()){
-                    while(!pila_operaciones.isEmpty()) {
-                        trencito.queue(pila_operaciones.pop());
+                if((separacion[i].equals("+") || separacion[i].equals("-")) && !pilita.isEmpty()){
+                    while(!pilita.isEmpty()) {
+                        trencito.queue(pilita.pop());
                     }
                 }
-                pila_operaciones.push(separacion[i]);
+                pilita.push(separacion[i]);
             }
-            System.out.println("Cola: " + trencito.toString());
-            System.out.println("Pila: " + pila_operaciones.toString());
         }
-        while(!pila_operaciones.isEmpty()) {
-            trencito.queue(pila_operaciones.pop());
+        while(!pilita.isEmpty()) {
+            trencito.queue(pilita.pop());
         }
-        System.out.println("Cola: " + trencito.toString());
-        System.out.println("Pila: " + pila_operaciones.toString());
+        //System.out.println("Notacion Postfija: " + trencito.toString());
+        
+        // calculo de postfijo a evaluacion
+        while(!trencito.isEmpty()) {
+            if(trencito.peek().getDato().matches("\\d+")){
+                pilita.push(trencito.unqueue());
+            }else{
+                int b = Integer.parseInt(pilita.pop().getDato());
+                int a = Integer.parseInt(pilita.pop().getDato());
+                int c = 0;
+                switch(trencito.unqueue().getDato()){
+                    case "*":
+                        c = a * b;
+                        break;
+                    case "/":
+                        c = a / b;
+                        break;
+                    case "+":
+                        c = a + b;
+                        break;
+                    case "-":
+                        c = a - b;
+                        break;
+                }
+                pilita.push(Integer.toString(c));
+            }
+        }
+        System.out.println("Respuesta: " + pilita.toString());
         
         return 0;
     }

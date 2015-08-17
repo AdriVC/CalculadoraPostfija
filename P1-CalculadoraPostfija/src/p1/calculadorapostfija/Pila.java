@@ -35,9 +35,13 @@ public class Pila {
     
     public void push(Nodo nodo){
         Nodo nuevo = nodo;
-        nuevo.setPrevious(tos);
-        tos.setNext(nuevo);
-        tos = nuevo;
+        if(tos == null){
+            tos = nodo;
+        }else{
+            tos.setNext(nodo);
+            nodo.setPrevious(tos);
+            tos = nodo; 
+        }
         size++;
     }
     
@@ -56,7 +60,10 @@ public class Pila {
     @Override
     public String toString(){
         Nodo temp = tos;
-        String output = " (ToS)";
+        String output = "";
+        if(size > 0){
+            output = " (ToS)";
+        }
         for (int i = 0; i < size; i++){
             if(i != size-1)
                 output = " , " + temp.getDato() + output;

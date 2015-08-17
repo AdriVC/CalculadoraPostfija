@@ -51,7 +51,7 @@ public class Cola {
     
     public Nodo unqueue(){
         Nodo temp = head;
-        head = temp.getNext();
+        head = head.getNext();
         size--;
         return temp;
     }
